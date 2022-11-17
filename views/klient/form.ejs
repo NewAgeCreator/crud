@@ -1,0 +1,79 @@
+
+	<%- include(`../fragments/header.ejs`) %>
+<main>
+    <script type="application/javascript" src="/javascripts/validationCommon_klient.js"></script>
+     <h2><%=pageTitle%></h2>
+	 
+<form class="form" method="post" action="<%=formAction%>" novalidate onsubmit="return validateForm();" >
+
+<input type="hidden" name="klient_id" value="<%=klient.klient_id%>"<%= (formMode == `showDetails`) ? 'disabled' : `` %> />
+<label for="sureName">Nazwisko: <span class="symbol-required">*</span></label>
+<input type="text" name="surename" id="surename" placeholder="Wymagane" 
+    value="<%=klient.surename%>" <%= (formMode == `showDetails`) ? 'disabled' : `` %> />
+<span class="errors-text" id="errorSureName">
+
+</span>
+
+<label for="Country">Kraj: <span class="symbol-required">*</span></label>
+<input type="text" name="country" id="country" placeholder="Wymagane" 
+  value="<%=klient.country%>" <%= (formMode == `showDetails`) ? 'disabled' : `` %>/>  
+<span class="errors-text" id="errorCountry">
+  
+</span>
+
+<label for="code">Kod: <span class="symbol-required">*</span></label>
+<input type="text" name="code" id="code" placeholder="00-000" 
+value="<%=klient.code%>" <%= (formMode == `showDetails`) ? 'disabled' : `` %>/>
+<span class="errors-text" id="errorCode">
+
+</span>
+
+<label for="City">Miasto: <span class="symbol-required">*</span></label>
+<input type="text" name="city" id="city" placeholder="Wymagane" 
+value="<%=klient.city%>" <%= (formMode == `showDetails`) ? 'disabled' : `` %>/>
+<span class="errors-text" id="errorCity"></span>
+
+<% if(formMode == `edit` || formMode == 'createNew') { %>
+  <a href="/klient" class=" form-button-submit form-button-cancel">Anuluj</a>
+  <input type="submit" class="form-button-submit" value="<%=btnLabel %>" />
+  <p id="errorSummary"></p>
+  <% } %>
+
+  <% if(formMode == `showDetails` ) { %>
+    <div class = "section-buttons">
+      <a href = "/klient/edit/<%=klient.klient_id%>" class="list-actions-button-edit">Edytuj</a>
+    </div>
+  <p class="errors-text" id="errorSummary"></p>
+  <% } %>
+
+
+</form>
+
+<% if(formMode == 'showDetails' || formMode == 'edit') { %>
+  <h2>Szczegóły wypozyczenia klienta : </h2>
+  <table class = "table-list">
+    <thead>
+      <tr>
+        <th>Id wypozyczenia</th>
+        <th>Data wypozyczenia</th>
+        <th>Data zwrotu</th>
+      </tr>
+    </thead>
+    <tbody>
+      <% for (let w of klient.wypozyczenia) { %>
+        <tr>
+          <td><a href="/wypozyczenie/edit/<%= w.wypozyczenie_id %>"><%= w.wypozyczenie_id %> </a> </td>
+          <td> <%= w.startDate.toISOString().split(`T`)[0] %></td>
+          <td> <%= w.endDate ? w.endDate.toISOString().split(`T`)[0] : `` %></td>
+        </tr>
+      <% } %>
+      
+    </tbody>
+    
+  </table>
+  <% } %>
+
+</main>   
+
+
+<%- include(`../fragments/footer.ejs`) %>

@@ -1,0 +1,46 @@
+
+	<%- include(`../fragments/header.ejs`) %>
+<main>
+=
+ 
+     <h2>Lista wypożyczonych filmów</h2>
+	<table class="table-list">
+   <thead>
+       <tr>
+			<th>.id</th>
+			<th>Klient</th>
+           	<th>Film</th>	
+           	<th>Data Wypożyczenia</th> 		   
+	       	<th>Data Zwrotu</th>
+			<th>Akcje</th>
+	    </tr>   
+	</thead>
+	<tbody>
+		<% for(let w of wypozyczenia) { %>
+	      <tr>
+		      <td><%= w.wypozyczenie_id %></td>
+			   <td><%= w.klient.surename %></td>
+			   <td><%= w.film.title %></td>  
+			   <td><%= w.startDate.toISOString().split(`T`)[0] %></td>
+			   <td><%= w.endDate.toISOString().split(`T`)[0] %></td>
+			   <td>
+				   <ul class="list-actions">
+                        <li>
+                            <a href="/wypozyczenie/edit/<%=w.wypozyczenie_id%>" class="list-actions-button-edit">Edytuj</a>		
+                        </li>
+                        <li>							
+               			    <a href="/wypozyczenie/delete/<%=w.wypozyczenie_id%>" class="list-actions-button-delete">Usuń</a>		
+						</li>
+	               </ul>
+			   </td>	
+          </tr>		
+		  <% } %>	
+		
+    </tbody>		  
+
+
+ </table>
+ <p><a href="/wypozyczenie/add" class="button-add">Dodaj nowe wypożyczenie </a></p>
+</main>   	 	 
+
+<%- include(`../fragments/footer.ejs`) %>

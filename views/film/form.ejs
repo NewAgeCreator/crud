@@ -1,0 +1,79 @@
+ 
+	<%- include(`../fragments/header.ejs`) %>
+		<main>
+			<script type="application/javascript" src="/javascripts/validationCommon_film.js"></script>
+			<h2><%= pageTitle %></h2>
+			
+	<form class="form" method="post" action="<%=formAction%>" novalidate onsubmit="return validateForm();">
+
+		<input type="hidden" name="film_id" value="<%=film.film_id%>" <%= (formMode == `showDetails`) ? 'disabled' : `` %> />
+		<label for="title">Tytuł: <span class="symbol-required">*</span></label>
+		<input type="text" name="title" id="title" placeholder="2-60 znaków"  value="<%=film.title%>" <%= (formMode == 'showDetails' ? 'disabled' : '') %>/>
+		<span class="errors-text" id="errorTitle">
+	
+		</span>
+
+		<label for="type">Gatunek: <span class="symbol-required" >*</span></label>
+		<input type="text" name="type" id="type" placeholder="2-60 znaków" value="<%=film.type%>" <%= (formMode == `showDetails`) ? 'disabled' : `` %> />
+		<span class="errors-text" id="errorType">
+			
+		</span>
+
+		<label for="year">Rok premiery: </label>
+		<input type="number" min="1980" max = "2022" step = "1" name="year" id="year" value="<%=parseInt(film.year)%>" <%= (formMode == `showDetails`) ? 'disabled' : `` %> />
+		<span  class="errors-text" id="errorYear">
+	
+		</span>
+
+		<label for="director">Reżyser: </label>
+		<input type="text" name="director" id="director" placeholder="2-30 znaków" value="<%=film.director%>" <%= (formMode == `showDetails`) ? 'disabled' : `` %> />
+		<span class="errors-text" id="errorDirector">
+
+		</span>
+			
+		<% if(formMode == `edit` || formMode == 'createNew') { %>
+		<a href="/film" class=" form-button-submit form-button-cancel">Anuluj</a>
+		<input type="submit" class="form-button-submit" value="Dodaj" />
+		<p id="errorSummary"></p>
+		<% } %>
+
+		<% if(formMode == `showDetails` ) { %>
+			<div class = "section-buttons">
+				<a href = "/film/edit/<%=film.film_id%>" class="list-actions-button-edit">Edytuj</a>
+			</div>
+		<p class="errors-text" id="errorSummary"></p>
+		<% } %>
+
+	</form>
+
+		<% if(formMode == 'showDetails' || formMode == 'edit') { %>
+			<h2>Szczegóły wypozyczenia filmu : </h2>
+			<table class = "table-list">
+				<thead>
+					<tr>
+						<th>Id wypozyczenia</th>
+						<th>Data wypozyczenia</th>
+						<th>Data zwrotu</th>
+					</tr>
+				</thead>
+				<tbody>
+					<% for (let w of film.wypozyczenia) { %>
+						<tr>
+							<td><a href="/wypozyczenie/details/<%= w.wypozyczenie_id %>"><%= w.wypozyczenie_id %> </a> </td>
+							<td> <%= w.startDate.toISOString().split(`T`)[0] %></td>
+							<td> <%= w.endDate ? w.endDate.toISOString().split(`T`)[0] : `` %></td>
+						</tr>
+					<% } %>
+					
+				</tbody>
+				
+			</table>
+
+		<% } %>
+
+	
+	
+
+	
+	</main>   	 
+	<%- include(`../fragments/footer.ejs`) %>

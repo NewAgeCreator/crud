@@ -1,0 +1,75 @@
+
+
+	<%- include(`../fragments/header.ejs`) %>
+
+<main>
+<script type="application/javascript" src="/javascripts/validationCommon_wypozyczenie.js"></script>
+     <h2><%= pageTitle %></h2>
+	 
+<form class="form" method="post" action="<%=formAction%>" novalidate onsubmit="return validateForm();">
+     <% if(wypozyczenie[0] && wypozyczenie[0].wypozyczenie_id ) {%>
+     <input type="hidden" name="wypozyczenie_id"value="<%=wypozyczenie[0].wypozyczenie_id%>">
+     <% } else { %>
+          <input type="hidden" name="wypozyczenie_id" value="">
+     <% } %>
+<label for="title">Tytuł:</label>
+
+<select name="film_id" id="title" required <%= (formMode == 'showDetails') ? `disabled` : `` %> >      
+      <option value="0" selected>-- Wybierz tytuł --</option>
+      <% for(let i = 0 ; i < allFilms.length ; i++) {  %>
+          <option value = "<%= allFilms[i].film_id%>" label="<%= allFilms[i].title%>"
+               <% if(wypozyczenie[0]){ %>
+                    <%= (allFilms[i].film_id == wypozyczenie[0].film.film_id) ? 'selected' : ''%> 
+                    <% } %>
+                    > </option>
+     <% } %>
+</select>
+
+<span class="errors-text" id="errorTitle"></span>
+<label for="sureName">Nazwisko:</label>
+
+<select name="klient_id" id="surename" required <%= (formMode == 'showDetails') ? `disabled` : `` %>>
+     <option value="0" selected>-- Wybierz nazwisko --</option>
+	<% for(let i = 0 ; i < allKlients.length ; i++){  %>
+        <option value = "<%= allKlients[i].klient_id%>" label="<%= allKlients[i].surename%>"
+          <% if( wypozyczenie[0]){ %>
+               <%= ( wypozyczenie[0].wypozyczenie_id && allKlients[i].klient_id == wypozyczenie[0].klient.klient_id) ? 'selected' : ''%> 
+          <% } %>
+          > </option>
+     <% } %>
+</select>
+<span class="errors-text" id="errorSurename"></span>
+
+
+
+<label for="startDate">Data wypożyczenia:</label>
+<input type="date" id="startDate" name="startDate"
+<% if( wypozyczenie[0]){ %>
+     value= "<%= wypozyczenie[0].startDate.toISOString().split(`T`)[0] %>"
+<% } %>  />
+<span class="errors-text" id="errorStartDate"></span>
+
+
+<label for="endDate">Data zwrotu:</label>
+<input type="date" id="endDate" name="endDate" 
+<% if( wypozyczenie[0]){ %>
+     value= "<%= wypozyczenie[0].endDate.toISOString().split(`T`)[0] %>"
+<% } %>  />
+<span class="errors-text" id="errorEndDate"></span>
+
+
+<div class="form-buttons">
+
+  <p class="errors-text" id="errorSummary"></p>
+  <input type="submit" class="form-button-submit" value="<%=btnLabel %>" />
+  <a href="/" class="form-button-cancel">Anuluj</a>
+
+</div>
+
+</form>
+
+ 
+</main>   	 
+
+
+<%- include(`../fragments/footer.ejs`) %>

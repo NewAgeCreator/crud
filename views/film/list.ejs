@@ -1,0 +1,45 @@
+<%- include(`../fragments/header.ejs`) %>
+
+<main>
+     <h2>Lista filmów</h2>
+
+<table class="table-list">
+   <thead>
+       <tr>
+           <th>Tytuł</th>
+           <th>Gatunek</th>	
+           <th>Rok premiery</th> 		   
+	       <th>Reżyser</th>
+		   <th>Akcje</th>
+	    </tr>   
+      
+	</thead>
+	
+	<tbody>
+		<% for(let f of films) { %>
+	      <tr>
+		      <td><%= f.title %></td>
+			   <td><%= f.type %></td>
+			   <td><%= f.year %></td>  
+			   <td><%= f.director %></td>
+			   <td>
+				   <ul class="list-actions">
+                       <li>
+                            <a href="/film/details/<%=f.film_id%>" class="list-actions-button-details">Szczegóły</a>
+                        </li>
+                        <li>
+                            <a href="/film/edit/<%=f.film_id%>" class="list-actions-button-edit">Edytuj</a>		
+                        </li>
+                        <li>							
+               			    <a href="/film/delete/<%=f.film_id%>" class="list-actions-button-delete">Usuń</a>		
+						</li>
+	               </ul>
+			   </td>	
+          </tr>	
+		  <% } %>		
+    </tbody>		  
+ </table>
+ <p><a href="/film/add" class="button-add">Dodaj nowy film</a></p>
+</main>   	 
+			 
+<%- include(`../fragments/footer.ejs`) %>

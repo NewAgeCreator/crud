@@ -1,0 +1,44 @@
+
+	<%- include(`../fragments/header.ejs`) %>
+<main>
+     <h2>Lista klientów</h2>
+
+<table class="table-list">
+   <thead>
+       <tr>
+
+           <th>Nazwisko</th>
+           <th>Kraj</th>	
+           <th>Kod</th> 		   
+	       <th>Miejscowość</th>
+		   <th>Akcje</th>
+	    </tr>   
+	</thead>
+	<tbody>
+		<% for(let klient of klients) { %>
+	      <tr>
+		       <td><%=klient.surename%></td>
+			   <td><%=klient.country%></td>
+			   <td><%=klient.code%></td>  
+			   <td><%=klient.city%></td>
+			   <td>
+				   <ul class="list-actions">
+                       <li>
+                            <a href="klient/details/<%=klient.klient_id%>" class="list-actions-button-details">Szczegóły</a>
+                        </li>
+                        <li>
+                            <a href="/klient/edit/<%=klient.klient_id%>" class="list-actions-button-edit">Edytuj</a>
+                            							
+                        </li>
+                        <li>							
+               			    <a href="/klient/delete/<%=klient.klient_id%>" class="list-actions-button-delete">Usuń</a>			
+						</li>
+	               </ul>
+			   </td>	
+          </tr>	
+		  <% } %>		
+    </tbody>		  
+ </table>
+ <p><a href="/klient/add" class="button-add">Dodaj nowego klienta</a></p>
+</main>  
+<%- include(`../fragments/footer.ejs`) %>

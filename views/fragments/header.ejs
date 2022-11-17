@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="pl-PL">
+<head>
+		<meta name="viewport" content="width=device-width,initial-scale=1" />
+		<meta charset="UTF-8">
+		<title>Rent a Movie</title>
+		<link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+	<header>
+		<h1>Filmy na życzenie </h1>
+		<img src="/images/logo.png" width="420px" height="240px" alt="Wypozyczalnia">
+	</header>
+	
+	<nav>
+	     <ul>
+		     
+			 <li><a href="/" class="<%= navLocation == 'main' ? 'active' : '' %>">Strona główna</a></li>
+			 <li><a href="/klient" class="<%= navLocation == 'klient' ? 'active' : '' %>" >Klienci</a></li>
+			 <li><a href="/film" class="<%= navLocation == 'film' ? 'active' : '' %>" >Filmy</a></li>
+			 <li><a href="/wypozyczenie"class="<%= navLocation == 'wypozyczenie' ? 'active' : '' %>" >Wypożyczenie</a></li>
+			 
+		</ul> 
+	</nav>
